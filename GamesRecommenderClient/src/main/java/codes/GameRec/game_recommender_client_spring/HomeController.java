@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/recommend")
     public String recommend(@RequestParam("title") String title, Model model) {
-        String apiUrl = "http://127.0.0.1:8000/recommend/cosine?title=" + title;
+        String apiUrl = "http://127.0.0.1:8000/recommend/nn?title=" + title;
 
         try {
             GameRecommendation response = restTemplate.getForObject(apiUrl, GameRecommendation.class);

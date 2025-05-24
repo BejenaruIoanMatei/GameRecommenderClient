@@ -2,12 +2,150 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Game Recommender</title>
+    <style>
+        /* Reset simplu */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #1e1e2f;
+            color: #e0e0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            color: #70c1b3;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.7);
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 8px #70c1b3;
+        }
+
+        button {
+            background: #70c1b3;
+            border: none;
+            color: #fff;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            background: #50a693;
+        }
+
+        /* Mesaj eroare */
+        div[th\\:if="${error}"] p {
+            background: #ff4c4c;
+            padding: 12px 15px;
+            border-radius: 6px;
+            max-width: 480px;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
+        }
+
+        /* Recomandari */
+        div[th\\:if="${recommendations}"] {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #70c1b3;
+            font-size: 1.8rem;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+        }
+
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+
+        li {
+            background: #2a2a40;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 14px rgba(0,0,0,0.7);
+        }
+
+        strong {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #a0e9d8;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 3px 7px rgba(0,0,0,0.7);
+        }
+
+        /* Responsive */
+        @media(min-width: 600px) {
+            ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media(min-width: 900px) {
+            ul {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
 <h1>Game Recommender</h1>
 
-<form action="/recommend" method="get">
-    <input type="text" name="title" placeholder="Enter game title" required />
+<form action="/recommend" method="get" onsubmit="return validateInput()">
+    <input type="text" name="title" id="gameTitle" placeholder="Enter game title" required />
     <button type="submit">Get Recommendations</button>
 </form>
 
@@ -24,6 +162,19 @@
         </li>
     </ul>
 </div>
+
+<script>
+    // Validare simplă pentru input (optional, pentru UX)
+    function validateInput() {
+        const input = document.getElementById('gameTitle');
+        if(input.value.trim().length < 2) {
+            alert('Please enter at least 2 characters.');
+            input.focus();
+            return false;
+        }
+        return true;
+    }
+</script>
 
 </body>
 </html>
