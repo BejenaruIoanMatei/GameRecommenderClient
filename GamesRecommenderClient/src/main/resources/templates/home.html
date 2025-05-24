@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Game Recommender</title>
+</head>
+<body>
+<h1>Game Recommender</h1>
+
+<form action="/recommend" method="get">
+    <input type="text" name="title" placeholder="Enter game title" required />
+    <button type="submit">Get Recommendations</button>
+</form>
+
+<div th:if="${error}">
+    <p th:text="${error}" style="color:red;"></p>
+</div>
+
+<div th:if="${recommendations}">
+    <h2 th:text="'Recommendations for: ' + ${title}"></h2>
+    <ul>
+        <li th:each="game : ${recommendations}">
+            <strong th:text="${game.name}"></strong><br/>
+            <img th:src="${game.image}" th:alt="${game.name}" style="max-width:200px;"/><br/><br/>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>
