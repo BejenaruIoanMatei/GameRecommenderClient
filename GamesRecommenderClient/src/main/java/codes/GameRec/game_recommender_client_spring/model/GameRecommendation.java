@@ -6,6 +6,7 @@ public class GameRecommendation {
     private String input;
     private List<GameInfo> recommendations;
 
+    // Getters & setters
     public String getInput() {
         return input;
     }

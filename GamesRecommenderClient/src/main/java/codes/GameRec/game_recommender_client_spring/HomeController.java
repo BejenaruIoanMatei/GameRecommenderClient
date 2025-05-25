@@ -1,6 +1,7 @@
 package codes.GameRec.game_recommender_client_spring;
 
 import codes.GameRec.game_recommender_client_spring.model.GameRecommendation;
+import codes.GameRec.game_recommender_client_spring.model.GameResponseWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +20,14 @@ public class HomeController {
 
     @GetMapping("/recommend")
     public String recommend(@RequestParam("title") String title, Model model) {
-        String apiUrl = "http://127.0.0.1:8000/recommend/nn?title=" + title;
+        String apiUrl = "http://127.0.0.1:8000/recommend/?title=" + title;
 
         try {
-            GameRecommendation response = restTemplate.getForObject(apiUrl, GameRecommendation.class);
-            model.addAttribute("title", response.getInput());
-            model.addAttribute("recommendations", response.getRecommendations());
+            GameResponseWrapper response = restTemplate.getForObject(apiUrl, GameResponseWrapper.class);
+
+            model.addAttribute("title", title);
+            model.addAttribute("nnRecommendations", response.getNn().getRecommendations());
+            model.addAttribute("cosineRecommendations", response.getCosine().getRecommendations());
         } catch (Exception e) {
             model.addAttribute("error", "Failed to fetch recommendations.");
         }

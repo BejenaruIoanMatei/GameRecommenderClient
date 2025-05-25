@@ -3,7 +3,7 @@
 <head>
     <title>Game Recommender</title>
     <style>
-        /* Reset simplu */
+        /* Reset + stiluri generale */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -67,7 +67,6 @@
             background: #50a693;
         }
 
-        /* Mesaj eroare */
         div[th\\:if="${error}"] p {
             background: #ff4c4c;
             padding: 12px 15px;
@@ -79,10 +78,20 @@
             box-shadow: 0 2px 6px rgba(255, 0, 0, 0.5);
         }
 
-        /* Recomandari */
-        div[th\\:if="${recommendations}"] {
-            max-width: 480px;
-            width: 100%;
+        .toggle-methods {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .toggle-methods label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: bold;
+            color: #a0e9d8;
         }
 
         h2 {
@@ -98,6 +107,8 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 25px;
+            max-width: 960px;
+            margin-bottom: 40px;
         }
 
         li {
@@ -128,12 +139,12 @@
             box-shadow: 0 3px 7px rgba(0,0,0,0.7);
         }
 
-        /* Responsive */
         @media(min-width: 600px) {
             ul {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
+
         @media(min-width: 900px) {
             ul {
                 grid-template-columns: repeat(3, 1fr);
@@ -150,21 +161,38 @@
 </form>
 
 <div th:if="${error}">
-    <p th:text="${error}" style="color:red;"></p>
+    <p th:text="${error}"></p>
 </div>
 
-<div th:if="${recommendations}">
+<div th:if="${nnRecommendations != null}">
+    <div class="toggle-methods">
+        <label><input type="radio" name="method" value="nn" checked onchange="toggleMethod(this.value)"> Nearest Neighbors</label>
+        <label><input type="radio" name="method" value="cosine" onchange="toggleMethod(this.value)"> Cosine Similarity</label>
+    </div>
+
     <h2 th:text="'Recommendations for: ' + ${title}"></h2>
-    <ul>
-        <li th:each="game : ${recommendations}">
-            <strong th:text="${game.name}"></strong><br/>
-            <img th:src="${game.image}" th:alt="${game.name}" style="max-width:200px;"/><br/><br/>
+
+    <ul id="nnList">
+        <li th:each="game : ${nnRecommendations}">
+            <strong th:text="${game.name != null && !game.name.isEmpty() ? game.name : 'Untitled'}"></strong>
+            <img th:src="${game.image}" th:alt="${game.name}" />
+        </li>
+    </ul>
+
+    <ul id="cosineList" style="display: none;">
+        <li th:each="game : ${cosineRecommendations}">
+            <strong th:text="${game.name != null && !game.name.isEmpty() ? game.name : 'Untitled'}"></strong>
+            <img th:src="${game.image}" th:alt="${game.name}" />
         </li>
     </ul>
 </div>
 
 <script>
-    // Validare simplă pentru input (optional, pentru UX)
+    function toggleMethod(method) {
+        document.getElementById("nnList").style.display = method === "nn" ? "grid" : "none";
+        document.getElementById("cosineList").style.display = method === "cosine" ? "grid" : "none";
+    }
+
     function validateInput() {
         const input = document.getElementById('gameTitle');
         if(input.value.trim().length < 2) {
@@ -175,6 +203,5 @@
         return true;
     }
 </script>
-
 </body>
 </html>
