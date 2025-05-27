@@ -5,6 +5,12 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 <body>
+
+<div class="parallax-bg">
+    <div class="parallax-layer" style="background-image: url('/images/controller.jpg');"></div>
+    <div class="parallax-overlay"></div>
+</div>
+
 <h1>Game Recommender</h1>
 
 <form action="/recommend" method="get" onsubmit="return validateInput()">
@@ -42,3 +48,16 @@
 <script src="/js/script.js"></script>
 </body>
 </html>
+
+<script>
+    window.addEventListener('scroll', function () {
+        const layers = document.querySelectorAll('.parallax-layer');
+        const scrollTop = window.scrollY;
+
+        layers.forEach((layer, index) => {
+            const speed = (index + 1) * 0.5;
+            layer.style.transform = `translateY(${scrollTop * speed}px)`;
+        });
+    });
+</script>
+
