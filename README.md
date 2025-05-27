@@ -14,3 +14,5 @@
 -  Modern UI (sort of :) ) with responsive design and parallax effect
 -  Integration with FastAPI backend via REST
 
+## Demo Clip:
+- Watch here: [GameRecommenderDemo](https://drive.google.com/file/d/1XH1G14-Z3GqHGhX--C6fikCtXOK6IWKm/view?usp=sharing)
