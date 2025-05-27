@@ -1,25 +1,25 @@
 package codes.GameRec.game_recommender_client_spring.model;
 
-import java.util.List;
-
 public class GameRecommendation {
-    private String input;
-    private List<GameInfo> recommendations;
+    private String name;
+    private String image;
 
-    // Getters & setters
-    public String getInput() {
-        return input;
+    public GameRecommendation() {
     }
 
-    public void setInput(String input) {
-        this.input = input;
+    public String getName() {
+        return name;
     }
 
-    public List<GameInfo> getRecommendations() {
-        return recommendations;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setRecommendations(List<GameInfo> recommendations) {
-        this.recommendations = recommendations;
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

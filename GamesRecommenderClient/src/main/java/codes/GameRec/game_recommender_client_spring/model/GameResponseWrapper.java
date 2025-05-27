@@ -1,23 +1,22 @@
 package codes.GameRec.game_recommender_client_spring.model;
 
 public class GameResponseWrapper {
-    private GameRecommendation nn;
-    private GameRecommendation cosine;
+    private GameMethodResponse nn;
+    private GameMethodResponse cosine;
 
-    // Getters & setters
-    public GameRecommendation getNn() {
+    public GameMethodResponse getNn() {
         return nn;
     }
 
-    public void setNn(GameRecommendation nn) {
+    public void setNn(GameMethodResponse nn) {
         this.nn = nn;
     }
 
-    public GameRecommendation getCosine() {
+    public GameMethodResponse getCosine() {
         return cosine;
     }
 
-    public void setCosine(GameRecommendation cosine) {
+    public void setCosine(GameMethodResponse cosine) {
         this.cosine = cosine;
     }
 }
