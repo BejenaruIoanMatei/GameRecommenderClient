@@ -2,6 +2,7 @@ package codes.GameRec.game_recommender_client_spring;
 
 import codes.GameRec.game_recommender_client_spring.model.GameRecommendation;
 import codes.GameRec.game_recommender_client_spring.model.GameResponseWrapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,9 @@ import java.util.List;
 @Controller
 public class HomeController {
 
+    @Value("${backend.url}")
+    private String backendUrl;
+
     private final RestTemplate restTemplate = new RestTemplate();
 
     @GetMapping("/")
@@ -23,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/recommend")
     public String recommend(@RequestParam("title") String title, Model model) {
-        String apiUrl = "http://127.0.0.1:8000/recommend/?title=" + title;
+        String apiUrl = backendUrl + "/recommend/?title=" + title;
         System.out.println("Calling API: " + apiUrl); // DEBUG
 
         try {
